@@ -17,9 +17,10 @@ app.config.from_pyfile(Path(f'./config/{os.environ.get("APP_ENVIRONMENT", defaul
 # Initialise the peewee orm for postgres
 postgres_db = PostgresqlDatabase(
     app.config.get('APP_NAME'),
+    host=app.config.get('DB_HOST'),
+    port=int(app.config.get('DB_PORT')),
     user=app.config.get('DB_USERNAME'),
     password=app.config.get('DB_PASSWORD'),
-    host='10.1.0.9', port=5432
 )
 db.init(postgres_db)
 
