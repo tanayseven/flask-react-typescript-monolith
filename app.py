@@ -5,7 +5,7 @@ from flask import Flask
 from flask_security import PeeweeUserDatastore, Security
 from peewee import PostgresqlDatabase
 
-from todo_list.ext import db
+from todo_list.ext import db, ma, login_manager
 from todo_list.user.model import UserModel, RoleModel, UserRoleModel
 
 app: Flask = Flask(__name__.split('.')[0])
@@ -23,6 +23,12 @@ postgres_db = PostgresqlDatabase(
 )
 db.init(postgres_db)
 
+# Initialise Marshmallow
+ma.init_app(app)
+
 # Setup Flask-Security
-user_data_store = PeeweeUserDatastore(postgres_db, UserModel, RoleModel, UserRoleModel)
+user_data_store = PeeweeUserDatastore(db, UserModel, RoleModel, UserRoleModel)
 security = Security(app, user_data_store)
+
+# Setup Flask-Login
+login_manager.init_app(app)
