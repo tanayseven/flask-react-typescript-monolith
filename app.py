@@ -6,6 +6,7 @@ from flask_security import PeeweeUserDatastore, Security
 from peewee import PostgresqlDatabase
 
 from todo_list.ext import db
+from todo_list.user.model import UserModel, RoleModel, UserRoleModel
 
 app: Flask = Flask(__name__.split('.')[0])
 
@@ -21,19 +22,6 @@ postgres_db = PostgresqlDatabase(
     host='10.1.0.9', port=5432
 )
 db.init(postgres_db)
-
-
-class UserModel(db):
-    pass
-
-
-class RoleModel(db):
-    pass
-
-
-class UserRoleModel(db):
-    pass
-
 
 # Setup Flask-Security
 user_data_store = PeeweeUserDatastore(postgres_db, UserModel, RoleModel, UserRoleModel)
